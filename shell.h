@@ -135,3 +135,14 @@ ssize_t scan_buf(info_t *, char *, size_t *);
 int _putline(info_t *, char **, size_t *);
 void sigint(int);
 
+/* exit.c */
+char *_strcpy(char *, char *, int);
+char *_strcat(char *, char *, int);
+char *_strrchr(char *, char);
+
+/* setenv.c */
+char **get_env(info_t *);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
+
+
