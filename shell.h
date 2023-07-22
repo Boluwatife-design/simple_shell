@@ -114,14 +114,14 @@ int _shellexit(info_t *);
 int _cd(info_t *);
 int _dir(info_t *);
 
-/* alias.c */
+/*alias.c */
 int _history(info_t *);
 int put_alias(info_t *, char *);
 int list_alias(list_t *);
 int undo_alias(info_t *, char *);
 int _alias(info_t *);
 
-/* current_env.c */
+/*current_env.c */
 int _env(info_t *);
 char *_getenv(info_t *, const char *);
 int _setenv(info_t *);
@@ -135,14 +135,54 @@ ssize_t scan_buf(info_t *, char *, size_t *);
 int _putline(info_t *, char **, size_t *);
 void sigint(int);
 
-/* exit.c */
+/*exit.c */
 char *_strcpy(char *, char *, int);
 char *_strcat(char *, char *, int);
 char *_strrchr(char *, char);
 
-/* setenv.c */
+/*setenv.c */
 char **get_env(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 
+/*inter.c */
+int interact(info_t *);
+int _delim(char, char *);
+int _alpha(int);
+int _toint(char *);
+
+/* print.c */
+void _print(char *);
+int _printchar(char);
+int _setfd(char c, int fd);
+int _setsfd(char *str, int fd);
+
+/*info.c */
+void _eraseinfo(info_t *);
+void _putinfo(info_t *, char **);
+void _free(info_t *, int);
+
+/*strtoi.c */
+int _strtoint(char *);
+void _error(info_t *, char *);
+int _decimal(int, int);
+char *_converter(long int, int, int);
+void _rmcomment(char *);
+
+/*hist.c */
+char *_fetchhistory(info_t *info);
+int _wrthist(info_t *info);
+int _RDhist(info_t *info);
+int build_hist(info_t *info, char *buf, int linecount);
+int reorder_hist(info_t *info);
+
+/* node.c */
+list_t *_putnode(list_t **, const char *, int);
+list_t *_putnodeend(list_t **, const char *, int);
+size_t _printstr(const list_t *);
+int _delnode(list_t **, unsigned int);
+void _freelist(list_t **);
+
+/*mem.c */
+int ffree(void **);
 
