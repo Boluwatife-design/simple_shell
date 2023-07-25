@@ -204,3 +204,32 @@ size_t pull_list(const list_t *);
 list_t *begin_node(list_t *, char *, char);
 ssize_t _node_index(list_t *, list_t *);
 
+/*exec.c */
+int is_cmd(info_t *, char *);
+char *cp_chars(char *, int, int);
+char *get_path(info_t *, char *, char *);
+
+/* split.c */
+char **splitstr(char *, char *);
+char **splitstr1(char *, char);
+
+/* str.c */
+int _strlen(char *);
+int _strcmp(char *, char *);
+char *begin_with(const char *, const char *);
+char *_strcat(char *, char *);
+
+/* str1.c */
+char *_strcpy(char *, char *);
+char *_strdup(const char *);
+void _sets(char *);
+int _putchar(char);
+
+/* chain.c */
+int checks_chain(info_t *, char *, size_t *);
+void scan_chain(info_t *, char *, size_t *, size_t, size_t);
+int change_alias(info_t *);
+int change_vars(info_t *);
+int change_string(char **, char *);
+
+#endif
