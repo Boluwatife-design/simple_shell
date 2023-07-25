@@ -186,3 +186,21 @@ void _freelist(list_t **);
 /*mem.c */
 int ffree(void **);
 
+/*alloc.c */
+char *_fill(char *, char, unsigned int);
+void frees(char **);
+void *_alloc(void *, unsigned int, unsigned int);
+
+/* shell.c */
+int _shellmain(info_t *, char **);
+int _builtin(info_t *);
+void get_cmd(info_t *);
+void div_cmd(info_t *);
+
+/*list.c */
+size_t _lentlist(const list_t *);
+char **lst_tostr(list_t *);
+size_t pull_list(const list_t *);
+list_t *begin_node(list_t *, char *, char);
+ssize_t _node_index(list_t *, list_t *);
+
