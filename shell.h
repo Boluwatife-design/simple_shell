@@ -116,9 +116,6 @@ int _dir(info_t *);
 
 /*alias.c */
 int _history(info_t *);
-int put_alias(info_t *, char *);
-int list_alias(list_t *);
-int undo_alias(info_t *, char *);
 int _alias(info_t *);
 
 /*current_env.c */
