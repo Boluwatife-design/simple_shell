@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- **_strcpy - copies a string to another
+ **_strncpy - copies a string to another
  *@dest: the destination string to be copied to
  *@src: the source string
  *@n: the amount of characters to be copied
  *Return: copied string
  */
-char *_strcpy(char *dest, char *src, int n)
+char *_strncpy(char *dest, char *src, int n)
 {
 	int f, k;
 	char *s = dest;
@@ -31,13 +31,13 @@ char *_strcpy(char *dest, char *src, int n)
 }
 
 /**
- **_strcat - Joins two string together
+ **_strncat - Joins two string together
  *@dest: represent string 1
  *@src: represent string 2
  *@n: number of byte
  *Return: concatenated string
  */
-char *_strcat(char *dest, char *src, int n)
+char *_strncat(char *dest, char *src, int n)
 {
 	int f, k;
 	char *s = dest;

@@ -25,7 +25,7 @@ int checks_chain(info_t *info, char *buf, size_t *p)
 	}
 	else if (buf[j] == ';')
 	{
-		buf[j] = 0
+		buf[j] = 0;
 		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
@@ -80,11 +80,11 @@ int change_alias(info_t *info)
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = begin_node(info->alias, info->argv[0], '=');
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		p = _strchr(node->str, '=');
+		p = _strrchr(node->str, '=');
 		if (!p)
 			return (0);
 		p = _strdup(p + 1);
@@ -113,20 +113,20 @@ int change_vars(info_t *info)
 		if (!_strcmp(info->argv[i], "$?"))
 		{
 			change_string(&(info->argv[i]),
-					_strdup(convert_number(info->status, 10, 0)));
+					_strdup(_converter(info->status, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(info->argv[i], "$$"))
 		{
 			change_string(&(info->argv[i]),
-					_strdup(convert_number(getpid(), 10, 0)));
+					_strdup(_converter(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = begin_node(info->env, &info->argv[i][1], '=');
 		if (node)
 		{
 			change_string(&(info->argv[i]),
-					_strdup(_strchr(node->str, '=') + 1));
+					_strdup(_strrchr(node->str, '=') + 1));
 			continue;
 		}
 		change_string(&info->argv[i], _strdup(""));

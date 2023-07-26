@@ -7,7 +7,7 @@
  */
 int _history(info_t *info)
 {
-	print_list(info->history);
+	pull_list(info->history);
 	return (0);
 }
 
@@ -22,13 +22,13 @@ int undo_alias(info_t *info, char *str)
 	char *p, c;
 	int ret;
 
-	p = _strchar(str, '=');
+	p = _strrchr(str, '=');
 	if (!p)
 		return (1);
 	c = *p;
 	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	ret = _delnode(&(info->alias),
+		_node_index(info->alias, begin_node(info->alias, str, -1)));
 	*p = c;
 	return (ret);
 }
@@ -43,14 +43,14 @@ int put_alias(info_t *info, char *str)
 {
 	char *p;
 
-	p = _strchr(str, '=');
+	p = _strrchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
 		return (undo_alias(info, str));
 
 	undo_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	return (_putnodeend(&(info->alias), str, 0) == NULL);
 }
 
 /**
@@ -64,12 +64,12 @@ int list_alias(list_t *node)
 
 	if (node)
 	{
-		p = _strchr(node->str, '=');
+		p = _strrchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
 		_putchar(*a);
 		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
+		_sets(p + 1);
+		_sets("'\n");
 		return (0);
 	}
 	return (1);
@@ -98,11 +98,11 @@ int _alias(info_t *info)
 	}
 	for (i = 1; info->argv[i]; i++)
 	{
-		p = _strchr(info->argv[i], '=');
+		p = _strrchr(info->argv[i], '=');
 		if (p)
 			put_alias(info, info->argv[i]);
 		else
-			list_alias(node_starts_with(info->alias, info->argv[i], '='));
+			list_alias(begin_node(info->alias, info->argv[i], '='));
 	}
 
 	return (0);

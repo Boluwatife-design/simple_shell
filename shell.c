@@ -13,25 +13,25 @@ int _shellmain(info_t *info, char **av)
 
 	while (r != -1 && builtin_ret != -2)
 	{
-		clear_info(info);
-		if (interactive(info))
-			_puts("$ ");
-		_eputchar(BUF_FLUSH);
-		r = get_input(info);
+		_eraseinfo(info);
+		if (interact(info))
+			_sets("$ ");
+		_printchar(BUF_FLUSH);
+		r = _input(info);
 		if (r != -1)
 		{
-			set_info(info, av);
-			builtin_ret = find_builtin(info);
+			_putinfo(info, av);
+			builtin_ret = _builtin(info);
 			if (builtin_ret == -1)
-				find_cmd(info);
+				get_cmd(info);
 		}
-		else if (interactive(info))
+		else if (interact(info))
 			_putchar('\n');
-		free_info(info, 0);
+		_free(info, 0);
 	}
-	write_history(info);
-	free_info(info, 1);
-	if (!interactive(info) && info->status)
+	_wrthist(info);
+	_free(info, 1);
+	if (!interact(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
@@ -55,8 +55,8 @@ int _builtin(info_t *info)
 		{"env", _env},
 		{"help", _dir},
 		{"history", _history},
-		{"setenv", _setenv},
-		{"unsetenv", _unsetenv},
+		{"setenv", _nsetenv},
+		{"unsetenv", _nunsetenv},
 		{"cd", _cd},
 		{"alias", _alias},
 		{NULL, NULL}
@@ -89,26 +89,26 @@ void get_cmd(info_t *info)
 		info->linecount_flag = 0;
 	}
 	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!is_delim(info->arg[i], " \t\n"))
+		if (!_delim(info->arg[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+	path = get_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
-		fork_cmd(info);
+		div_cmd(info);
 	}
 	else
 	{
-		if ((interactive(info) || _getenv(info, "PATH=")
+		if ((interact(info) || _getenv(info, "PATH=")
 					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			fork_cmd(info);
+			div_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->status = 127;
-			print_error(info, "not valid\n");
+			_error(info, "not valid\n");
 		}
 	}
 }
@@ -130,9 +130,9 @@ void div_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		if (execve(info->path, info->argv, _getenviron(info)) == -1)
 		{
-			free_info(info, 1);
+			_free(info, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
@@ -146,7 +146,7 @@ void div_cmd(info_t *info)
 		{
 			info->status = WEXITSTATUS(info->status);
 			if (info->status == 126)
-				print_error(info, "access denied\n");
+				_error(info, "access denied\n");
 		}
 	}
 }

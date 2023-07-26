@@ -52,7 +52,7 @@ char *get_path(info_t *info, char *pthstr, char *cmd)
 
 	if (!pthstr)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((_strlen(cmd) > 2) && begin_with(cmd, "./"))
 	{
 		if (is_cmd(info, cmd))
 			return (cmd);

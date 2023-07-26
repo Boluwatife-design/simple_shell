@@ -73,7 +73,7 @@ int _setsfd(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		i += _setsfd(*str++, fd);
+		i += _setfd(*str++, fd);
 	}
 	return (i);
 }

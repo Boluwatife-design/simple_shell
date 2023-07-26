@@ -124,8 +124,8 @@ int _alias(info_t *);
 /*current_env.c */
 int _env(info_t *);
 char *_getenv(info_t *, const char *);
-int _setenv(info_t *);
-int _unsetenv(info_t *);
+int _nsetenv(info_t *);
+int _nunsetenv(info_t *);
 int add_env_list(info_t *);
 
 /*getline.c */
@@ -136,12 +136,12 @@ int _putline(info_t *, char **, size_t *);
 void sigint(int);
 
 /*exit.c */
-char *_strcpy(char *, char *, int);
-char *_strcat(char *, char *, int);
+char *_strncpy(char *, char *, int);
+char *_strncat(char *, char *, int);
 char *_strrchr(char *, char);
 
 /*setenv.c */
-char **get_env(info_t *);
+char **_getenviron(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 

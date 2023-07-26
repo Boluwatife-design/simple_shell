@@ -12,19 +12,19 @@ int _shellexit(info_t *info)
 
 	if (info->argv[1])
 	{
-		checkexit = _erratoi(info->argv[1]);
+		checkexit = _strtoint(info->argv[1]);
 		if (checkexit == -1)
 		{
 			info->status = 2;
-			print_error(info, "Wrong number: ");
-			_eputs(info->argv[1]);
-			_eputchar('\n');
+			_error(info, "Wrong number: ");
+			_print(info->argv[1]);
+			_printchar('\n');
 			return (1);
 		}
-		info->num_error = checkexit;
+		info->err_num = _strtoint(info->argv[1]);
 		return (-2);
 	}
-	info->num_error = -1;
+	info->err_num = -1;
 	return (-2);
 }
 
@@ -40,7 +40,7 @@ int _cd(info_t *info)
 
 	s = getcwd(buffer, sizeof(buffer));
 	if (!s)
-		_puts("TODO: >>get cwd failure here<<\n");
+		_sets("TODO: >>get cwd failure here<<\n");
 	if (!info->argv[1])
 	{
 		dir = _getenv(info, "Home=");
@@ -53,11 +53,11 @@ int _cd(info_t *info)
 	{
 		if (!_getenv(info, "OLDPWD="))
 		{
-			_puts(s);
+			_sets(s);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD="));
+		_sets(_getenv(info, "OLDPWD="));
 		_putchar('\n');
 		chdir_ret = chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
@@ -65,13 +65,13 @@ int _cd(info_t *info)
 		chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
 	{
-		print_error(info, "can't change directory to ");
-		_eputs(info->argv[1]);
-		_eputchar('\n');
+		_error(info, "can't cd to ");
+		_print(info->argv[1]);
+		_printchar('\n');
 	}
 	{
 		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, sizeof(buffer));
+		_setenv(info, "PWD", getcwd(buffer, sizeof(buffer)));
 	}
 	return (0);
 }
@@ -86,9 +86,9 @@ int _dir(info_t *info)
 	char **arg_array;
 
 	arg_array = info->argv;
-	_puts("help command works. Function not yet implemented \n");
+	_sets("command works, yet to apply Function\n");
 	if (0)
-		_puts(*arg_array)
+		_sets(*arg_array);
 
 	return (0);
 }

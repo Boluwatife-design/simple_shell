@@ -61,11 +61,11 @@ size_t pull_list(const list_t *p)
 
 	while (p)
 	{
-		_puts(convert_number(p->num, 10, 0));
+		_sets(_converter(p->num, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(p->str ? p->str : "(nil)");
-		_puts("\n");
+		_sets(p->str ? p->str : "(nil)");
+		_sets("\n");
 		p = p->next;
 		i++;
 	}

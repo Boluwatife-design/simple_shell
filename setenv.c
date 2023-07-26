@@ -1,19 +1,19 @@
 #include "shell.h"
 
 /**
- * get_env - returns the string array of our environment
+ * _getenviron - returns the string array of our environment
  * @info: Structure containing potential arguments.
  * Return: 0
  */
-char **get_env(info_t *info)
+char **_getenviron(info_t *info)
 {
-	if (!info->env || info->en_changed)
+	if (!info->environ || info->env_changed)
 	{
-		info->env = list_to_strings(info->en);
-		info->en_changed = 0;
+		info->environ = lst_tostr(info->env);
+		info->env_changed = 0;
 	}
 
-	return (info->env);
+	return (info->environ);
 }
 
 /**
@@ -24,7 +24,7 @@ char **get_env(info_t *info)
  */
 int _unsetenv(info_t *info, char *var)
 {
-	list_t *node = info->en;
+	list_t *node = info->env;
 	size_t i = 0;
 	char *p;
 
@@ -33,18 +33,18 @@ int _unsetenv(info_t *info, char *var)
 
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = begin_with(node->str, var);
 		if (p && *p == '=')
 		{
-			info->en_changed = delete_node_at_index(&(info->en), i);
+			info->env_changed = _delnode(&(info->env), i);
 			i = 0;
-			node = info->en;
+			node = info->env;
 			continue;
 		}
 		node = node->next;
 		i++;
 	}
-	return (info->en_changed);
+	return (info->env_changed);
 }
 
 /**
@@ -70,21 +70,21 @@ int _setenv(info_t *info, char *var, char *value)
 	_strcpy(buf, var);
 	_strcat(buf, "=");
 	_strcat(buf, value);
-	node = info->en;
+	node = info->env;
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = begin_with(node->str, var);
 		if (p && *p == '=')
 		{
 			free(node->str);
 			node->str = buf;
-			info->en_changed = 1;
+			info->env_changed = 1;
 			return (0);
 		}
 		node = node->next;
 	}
-	add_node_end(&(info->en), buf, 0);
+	_putnodeend(&(info->env), buf, 0);
 	free(buf);
-	info->en_changed = 1;
+	info->env_changed = 1;
 	return (0);
 }

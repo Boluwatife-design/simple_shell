@@ -35,13 +35,13 @@ int _strtoint(char *s)
  */
 void _error(info_t *info, char *errstr)
 {
-	_eputs(info->fname);
-	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->argv[0]);
-	_eputs(": ");
-	_eputs(errstr);
+	_print(info->fname);
+	_print(": ");
+	_decimal(info->line_count, STDERR_FILENO);
+	_print(": ");
+	_print(info->argv[0]);
+	_print(": ");
+	_print(errstr);
 }
 
 /**
@@ -57,7 +57,7 @@ int _decimal(int input, int fd)
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
+		__putchar = _printchar;
 	if (input < 0)
 	{
 		_abs_ = -input;
