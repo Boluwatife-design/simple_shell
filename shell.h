@@ -57,6 +57,8 @@ typedef struct liststr
  * @argv:an array of strings generated from arg
  * @path: a string path for the current command
  * @argc: the argument count
+ * @hist: history
+ * @pth: path
  * @line_count: the error count
  * @err_num: the error code for exit()s
  * @linecount_flag: if on count this line of input
@@ -192,7 +194,7 @@ void *_alloc(void *, unsigned int, unsigned int);
 int _shellmain(info_t *, char **);
 int _builtin(info_t *);
 void get_cmd(info_t *);
-void fork_cmd(info_t *);
+void div_cmd(info_t *);
 
 /*list.c */
 size_t _lentlist(const list_t *);
