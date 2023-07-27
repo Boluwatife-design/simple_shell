@@ -98,13 +98,13 @@ void get_cmd(info_t *info)
 	if (path)
 	{
 		info->path = path;
-		div_cmd(info);
+		fork_cmd(info);
 	}
 	else
 	{
 		if ((interact(info) || _getenv(info, "PATH=")
 					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			div_cmd(info);
+			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->status = 127;
@@ -114,11 +114,11 @@ void get_cmd(info_t *info)
 }
 
 /**
- * div_cmd-split an exec thread to run cmd
+ * fork_cmd-split an exec thread to run cmd
  * @info: the parameter and return info struct
  * Return: void
  */
-void div_cmd(info_t *info)
+void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
 

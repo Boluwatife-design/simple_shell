@@ -192,7 +192,7 @@ void *_alloc(void *, unsigned int, unsigned int);
 int _shellmain(info_t *, char **);
 int _builtin(info_t *);
 void get_cmd(info_t *);
-void div_cmd(info_t *);
+void fork_cmd(info_t *);
 
 /*list.c */
 size_t _lentlist(const list_t *);
