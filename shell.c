@@ -14,32 +14,32 @@ int _shellmain(info_t *info, char **av)
 	while (r != -1 && builtin_ret != -2)
 	{
 		_eraseinfo(info);
-		if (interact(info))
-			_sets("$ ");
-		_printchar(BUF_FLUSH);
-		r = _input(info);
-		if (r != -1)
-		{
-			_putinfo(info, av);
-			builtin_ret = _builtin(info);
-			if (builtin_ret == -1)
-				get_cmd(info);
-		}
-		else if (interact(info))
-			_putchar('\n');
-		_free(info, 0);
-	}
-	_wrthist(info);
-	_free(info, 1);
-	if (!interact(info) && info->status)
-		exit(info->status);
-	if (builtin_ret == -2)
-	{
-		if (info->err_num == -1)
-			exit(info->status);
-		exit(info->err_num);
-	}
-	return (builtin_ret);
+                if (interact(info))
+                        _sets("$ ");
+                _printchar(BUF_FLUSH);
+                r = _input(info);
+                if (r != -1)
+                {
+                        _putinfo(info, av);
+                        builtin_ret = _builtin(info);
+                        if (builtin_ret == -1)
+                                get_cmd(info);
+                }
+                else if (interact(info))
+                        _putchar('\n');
+                _free(info, 0);
+        }
+        _wrthist(info);
+        _free(info, 1);
+        if (!interact(info) && info->status)
+                exit(info->status);
+        if (builtin_ret == -2)
+        {
+                if (info->err_num == -1)
+                        exit(info->status);
+                exit(info->err_num);
+        }
+        return (builtin_ret);
 }
 /**
  * _builtin-finds a builtin command
@@ -98,13 +98,13 @@ void get_cmd(info_t *info)
 	if (path)
 	{
 		info->path = path;
-		fork_cmd(info);
+		div_cmd(info);
 	}
 	else
 	{
 		if ((interact(info) || _getenv(info, "PATH=")
 					|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			fork_cmd(info);
+			div_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->status = 127;
@@ -114,11 +114,11 @@ void get_cmd(info_t *info)
 }
 
 /**
- * fork_cmd-split an exec thread to run cmd
+ * div_cmd-split an exec thread to run cmd
  * @info: the parameter and return info struct
  * Return: void
  */
-void fork_cmd(info_t *info)
+void div_cmd(info_t *info)
 {
 	pid_t child_pid;
 
