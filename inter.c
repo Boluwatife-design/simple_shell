@@ -1,47 +1,50 @@
 #include "shell.h"
 
 /**
- * interact-returns 1 if shell is interactive
- * @info: address
- * Return: 1 if interactive, else 0
+ * interactive - returns true if shell is interactive mode
+ * @info: struct address
+ * Return: 1 if interactive mode,else 0
  */
-int interact(info_t *info)
+int interactive(info_t *info)
 {
 	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * _delim-checks if character is delimeter
- * @c: the character to check
- * @del: the delimeter
- * Return: 1 if true, else 0
+ * is_delim - checks if character is a delimeter
+ * @c: the char to check
+ * @delim: the delimeter string
+ * Return: 1 if true, 0 if false
  */
-int _delim(char c, char *del)
+int is_delim(char c, char *delim)
 {
-	while (*del)
-		if (*del++ == c)
+	while (*delim)
+		if (*delim++ == c)
 			return (1);
 	return (0);
 }
 
 /**
- * _alpha-checks for alphabetic character
- * @c: The character to input
- * Return: 1 if c is alphabetic, else 0
+ * _isalpha - checks for alphabetic character
+ * @c: The character
+ * Return: 1 if c is alphabetic,else 0
  */
-int _alpha(int c)
+
+int _isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	else
 		return (0);
 }
+
 /**
- * _toint-converts a string to an integer
+ * _atoi - converts a str to int
  * @s: the string to be converted
- * Return: 0 if no numbers in string.
+ * Return: 0 if no numbers in strin
  */
-int _toint(char *s)
+
+int _atoi(char *s)
 {
 	int i, sign = 1, flag = 0, output;
 	unsigned int result = 0;

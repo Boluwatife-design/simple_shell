@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * main-input
+ * main - entry point
  * @ac: argument count
  * @av: argument vector
  * Return: 0 on success,else 1
@@ -25,19 +25,19 @@ int main(int ac, char **av)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				_print(av[0]);
-				_print(": 0: Can't open ");
-				_print(av[1]);
-				_printchar('\n');
-				_printchar(BUF_FLUSH);
+				_eputs(av[0]);
+				_eputs(": 0: Canot open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
 		}
 		info->readfd = fd;
 	}
-	add_env_list(info);
-	_RDhist(info);
-	_shellmain(info, av);
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
 	return (EXIT_SUCCESS);
 }

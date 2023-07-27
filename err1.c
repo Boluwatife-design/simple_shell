@@ -1,63 +1,63 @@
 #include "shell.h"
 
 /**
- * _strtoint-convert a string to an integer
- * @s: the string to convert
- * Return: 0 if no numbers in string,else -1
+ * _erratoi - converts a string to an integer
+ * @s: the string to be converted
+ * Return: 0 if no numbers in string,else 1
  */
-int _strtoint(char *s)
+int _erratoi(char *s)
 {
 	int i = 0;
-	unsigned long int res = 0;
+	unsigned long int result = 0;
 
 	if (*s == '+')
 		s++;
-	for (i = 0; s[i] != '\0'; i++)
+	for (i = 0;  s[i] != '\0'; i++)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
 		{
-			res *= 10;
-			res += (s[i] - '0');
-			if (res > INT_MAX)
+			result *= 10;
+			result += (s[i] - '0');
+			if (result > INT_MAX)
 				return (-1);
 		}
 		else
 			return (-1);
 	}
-	return (res);
+	return (result);
 }
 
 /**
- * _error - prints an error message
- * @info: the parameter and return info struct
- * @errstr: string containing specified error type
+ * print_error - prints an error message
+ * @info: the parameter & return info struct
+ * @estr: string containing specified error type
  * Return: 0 if no numbers in string,else -1
  */
-void _error(info_t *info, char *errstr)
+void print_error(info_t *info, char *estr)
 {
-	_print(info->fname);
-	_print(": ");
-	_decimal(info->line_count, STDERR_FILENO);
-	_print(": ");
-	_print(info->argv[0]);
-	_print(": ");
-	_print(errstr);
+	_eputs(info->fname);
+	_eputs(": ");
+	print_d(info->line_count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(info->argv[0]);
+	_eputs(": ");
+	_eputs(estr);
 }
 
 /**
- * _decimal-function that prints a decimal number
+ * print_d - function prints a decimal number
  * @input: the input
- * @fd: the filedescriptor to write to
+ * @fd: the filedescriptor
  * Return: number of characters printed
  */
-int _decimal(int input, int fd)
+int print_d(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
 	int i, count = 0;
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		__putchar = _printchar;
+		__putchar = _eputchar;
 	if (input < 0)
 	{
 		_abs_ = -input;
@@ -83,13 +83,13 @@ int _decimal(int input, int fd)
 }
 
 /**
- * _converter-converter function
+ * convert_number - converter function
  * @num: number
  * @base: base
  * @flags: argument flags
  * Return: string
  */
-char *_converter(long int num, int base, int flags)
+char *convert_number(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
@@ -118,11 +118,11 @@ char *_converter(long int num, int base, int flags)
 }
 
 /**
- * _rmcomment-function replaces first instance of '#' with '\0'
+ * remove_comments - function replaces first instance of '#' with '\0'
  * @buf: address of the string to modify
- * Return: Always 0
+ * Return: Always 0;
  */
-void _rmcomment(char *buf)
+void remove_comments(char *buf)
 {
 	int i;
 
