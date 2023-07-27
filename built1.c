@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <string.h>
 
 /**
  * _myhistory - displays the history list, one command by line

@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <string.h>
 
 /**
  * input_buf - buffers chained commands
